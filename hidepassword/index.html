@@ -8,15 +8,24 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div id="app">
-        <input type="text" v-model="message">
-        <p>{{message}}</p>
+    <div id="app" class="container">
+        <input :type="passwordFieldType" v-model="password">
+        <button type="button" @click="switchVisibility">Show/ Hide</button>
+        
     </div>
+
     <script>
         const app = Vue.createApp({
             data() {
                 return {
-                    message: 'Hello World'
+                    password: "",
+                    passwordFieldType: "password"
+                };
+            },
+            methods: {
+                switchVisibility() {
+                    this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
+                    console.log("check");
                 }
             }
         }).mount('#app');
