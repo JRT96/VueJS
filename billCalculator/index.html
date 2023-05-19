@@ -13,23 +13,39 @@
         <h1 class="me-4">Tip Calculator</h1>
         <div class="">
             <label for="billBox">How much is the total bill?</label>
-            <input type="text" name="billBox">
+            <input type="text" name="billBox" id="total" v-model="total">
             <label for="tipPercentage">How was the service?</label>
-            <select class="form-select" name="tipPercentage">
-                <option value="">5% (It was okay)</option>
-                <option value="">10% (Good)</option>
-                <option value="">15% (Very Good)</option>
-                <option value="">20% (Amazing)</option>
+            <select class="form-select" name="tipPercentage" id="percentage" v-model="percentage">
+                <option value="5.0" selected>5% (It was okay)</option>
+                <option value="10.0">10% (Good)</option>
+                <option value="15.0">15% (Very Good)</option>
+                <option value="20.0">20% (Amazing)</option>
             </select>
             <label for="peoplePaying">How many people are sharing the bill?</label>
-            <input type="number" name="peoplePaying">
-            <p>{{message}}</p>
+            <input type="number" name="peoplePaying" id="people" v-model="people" min="0">
+            <p class="alert alert-success" role="alert">Tip Amount: {{ tip }} / per person</p>
         </div>
         
     </div>
 
     <script>
-        const app = Vue.createApp({})
+        const app = Vue.createApp({
+           
+            data() {
+                return{
+
+                    total: 0,
+                    percentage: 20,
+                    people: 1
+                }
+            },
+            computed: {
+                tip(){
+                    this.people = (!isNaN(this.people) && this.people > 0) ? this.people : 1;
+                    return this.total > 0 ? (this.total * this.percentage/100)/ this.people : 0;
+                }
+            }
+        }).mount('#app');
     </script>
 </body>
 </html>
